@@ -1,7 +1,7 @@
 <x-app-layout>
   {{--背景--}}
   <div class="w-screen h-screen bg-[#2d197c] flex items-center justify-center font-sans">
-    {{--Todoリストカード--}}}
+
     <div class="w-[50vw] p-[30px] bg-white rounded-md">
       {{--ヘッダー--}}
       <div class="flex justify-between">

@@ -1,11 +1,11 @@
 <x-app-layout>
   {{--背景--}}
   <div class="w-screen h-screen bg-[#2d197c] flex items-center justify-center font-sans">
-
+    {{--Todoリストカード--}}}
     <div class="w-[50vw] p-[30px] bg-white rounded-md">
       {{--ヘッダー--}}
       <div class="flex justify-between">
-        <p class="mb-[15px] font-bold text-[24px]">Todo List</p>
+        <p class="mb-[15px] font-bold text-[24px]">タスク検索</p>
         <div class="flex items-center text-[16px] mb-[15px]">
           <p class="mr-4">「{{$user_name}}」でログイン中</p>
           <form method="post" action="{{route('logout')}}">
@@ -16,30 +16,27 @@
           </form>
         </div>
       </div>
-      {{--検索ボタン--}}
-      <a href="{{route('todo.find')}}" class="inline-block text-[12px] mb-[15px] bg-transparent hover:bg-lime-500 text-lime-500 font-semibold hover:text-white py-2 px-3 border border-lime-500 hover:border-transparent rounded">
-        タスク検索
-      </a>
       {{--Todoリスト--}}
       <div>
         @foreach ($errors->all() as $error)
         <p>{{$error}}</p>
         @endforeach
-        {{--Todo追加--}}
-        <form method="post" action="{{route('todo.create')}}" class="flex justify-between mb-[30px]">
+        {{--Todo検索--}}
+        <form action="{{route('todo.search')}}" class="flex justify-between mb-[30px]">
           @csrf
-          <input type="text" name="content" class="w-3/4 p-[5px] rounded-md border-[#ccc]">
+          <input type="text" name="keyword" class="w-3/4 p-[5px] rounded-md border-[#ccc]">
           <select name="tag_id" class="rounded-[5px] text-[14px]">
+            <option></option>
             @foreach($tags as $tag)
             <option value="{{$tag->id}}">{{$tag->content}}</option>
             @endforeach
           </select>
           <button type="submit" class="text-[12px] bg-transparent hover:bg-[#dc70fa] text-[#dc70fa] font-semibold hover:text-white py-2 px-3 border border-[#dc70fa] hover:border-transparent rounded">
-            追加
+            検索
           </button>
         </form>
         {{--Todo一覧・編集--}}
-        <table class="text-center w-full">
+        <table class="text-center w-full mb-6">
           <tbody>
             <tr class="font-bold">
               <td>作成日</td>
@@ -78,6 +75,7 @@
           </tbody>
         </table>
       </div>
+      <a href="{{route('dashboard')}}" class="bg-transparent hover:bg-gray-400 text-gray-400 font-semibold hover:text-white py-2 px-3 border border-gray-400  hover:border-transparent rounded">戻る</a>
     </div>
   </div>
 </x-app-layout>

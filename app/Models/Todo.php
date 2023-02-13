@@ -37,7 +37,7 @@ class Todo extends Model
                         $builder->where('tag_id', $tag_id);
                     })
                     ->when(!is_null($keyword), function (Builder $builder) use ($keyword) {
-                        $builder->orWhere('content', 'LIKE', "%$keyword%");
+                        $builder->where('content', 'LIKE', "%$keyword%");
                     })
             )->get();
     }

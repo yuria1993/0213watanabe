@@ -26,15 +26,19 @@ class Todo extends Model
         return $this->tag_id === $tag_id ? 'selected' : '';
     }
 
-    public function doSearch(?string $tag_id, ?string $keyword): Collection
+    public function doSearch(int $user_id, ?string $tag_id, ?string $keyword): Collection
     {
         return self::query()
-            ->when(!is_null($tag_id), function (Builder $builder) use ($tag_id) {
-                $builder->where('tag_id', $tag_id);
-            })
-            ->when(!is_null($keyword), function (Builder $builder) use ($keyword) {
-                $builder->orWhere('content', 'LIKE', "%$keyword%");
-            })
-            ->get();
+            ->with('tag')
+            ->where('user_id', $user_id)
+            ->where(
+                fn (Builder $builder) => $builder
+                    ->when(!is_null($tag_id), function (Builder $builder) use ($tag_id) {
+                        $builder->where('tag_id', $tag_id);
+                    })
+                    ->when(!is_null($keyword), function (Builder $builder) use ($keyword) {
+                        $builder->orWhere('content', 'LIKE', "%$keyword%");
+                    })
+            )->get();
     }
 }

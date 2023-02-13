@@ -26,7 +26,7 @@ class TodoController extends Controller
             [
                 'user_name' => $user->name,
                 'tags' => Tag::all(),
-                'todos' => Todo::with('tag')->get()
+                'todos' => $user->todos()->with('tag')->get()
             ]
         );
     }
@@ -84,7 +84,7 @@ class TodoController extends Controller
             [
                 'user_name' => $user->name,
                 'tags' => Tag::all(),
-                'todos' => $this->todo->doSearch($tag_id, $keyword)
+                'todos' => $this->todo->doSearch($user->id, $tag_id, $keyword)
             ]
         );
     }
